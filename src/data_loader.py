@@ -5,7 +5,7 @@ import numpy as np
 def load_and_preprocess_data(filepath):
     print("Veri yükleniyor ve temizleniyor...")
     # CSV dosyasını oku (İlk sütun ID olduğu için index olarak ayarlıyoruz)
-    df = pd.read_csv(filepath, index_col=0)
+    df = pd.read_csv(filepath, index_col=0, encoding='cp1254')
 
     # 1. Sütun isimlerini kodlaması kolay ve standart hale getirme
     df.columns = [
