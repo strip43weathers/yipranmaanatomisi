@@ -72,4 +72,4 @@ def train_baldness_model(df):
     }).sort_values(by='Önem (%)', ascending=False)
 
     print("\n" + "=" * 50 + "\n")
-    return acc, feature_importance_df
+    return model, acc, feature_importance_df
