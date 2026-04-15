@@ -1,25 +1,12 @@
 import pandas as pd
 import numpy as np
 
-
 def load_and_preprocess_data(filepath):
-    print("Veri yükleniyor ve kodlama (encoding) aranıyor...")
+    print("Excel dosyası yükleniyor...")
 
-    # Olası tüm kodlamaları sırayla deneyecek liste
-    encodings_to_try = ['utf-8-sig', 'mac_turkish', 'iso-8859-9', 'cp1254', 'utf-8', 'latin1']
-    df = None
-
-    for enc in encodings_to_try:
-        try:
-            df = pd.read_csv(filepath, index_col=0, encoding=enc)
-            print(f"--> Başarılı! Dosya '{enc}' formatında çözüldü ve okundu.\n")
-            break
-        except UnicodeDecodeError:
-            continue
-
-    if df is None:
-        raise ValueError(
-            "Dosya bilinen hiçbir formatla okunamadı. Lütfen Excel'den tekrar CSV (UTF-8) olarak kaydedin.")
+    # DİKKAT: read_csv yerine read_excel kullanıyoruz!
+    # Excel dosyalarında "encoding" hatası olmaz, pandas onu otomatik çözer.
+    df = pd.read_excel(filepath, index_col=0)
 
     # 1. Sütun isimlerini kodlaması kolay ve standart hale getirme
     df.columns = [
@@ -41,7 +28,10 @@ def load_and_preprocess_data(filepath):
             return 12.0
         if '-' in val:
             parts = val.split('-')
-            return (float(parts[0]) + float(parts[1])) / 2
+            try:
+                return (float(parts[0]) + float(parts[1])) / 2
+            except:
+                return np.nan
 
         val = val.replace(',', '.')
         try:

@@ -1,7 +1,7 @@
 from src.data_loader import load_and_preprocess_data
+from src.statistical_tests import run_all_tests
+from src.model_pipeline import train_baldness_model
 
-# Dosya adını senin gönderdiğin CSV adıyla eşleştirdim.
-# Eğer data klasörü içindeki adını değiştirdiysen burayı güncelle.
 DATA_PATH = "data/Tuğçe proje ödevi.xlsx"
 
 
@@ -9,12 +9,11 @@ def main():
     # 1. Aşama: Veriyi Çek ve Temizle
     df = load_and_preprocess_data(DATA_PATH)
 
-    # Temizlenmiş veriye genel bir bakış atalım
-    print("--- TEMİZLENMİŞ VERİ SETİ (İlk 5 Satır) ---")
-    print(df[['yas', 'meslek', 'calisma_saati', 'stres_seviyesi', 'hedef_kellik']].head())
+    # 2. Aşama: İstatistiksel Hipotez Testleri (Scipy)
+    run_all_tests(df)
 
-    print("\n--- VERİ BİLGİSİ ---")
-    print(df.info())
+    # 3. Aşama: Makine Öğrenmesi Modeli Eğitimi (Scikit-Learn)
+    trained_model = train_baldness_model(df)
 
 
 if __name__ == "__main__":
