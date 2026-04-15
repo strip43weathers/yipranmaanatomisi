@@ -48,4 +48,4 @@ def train_baldness_model(df):
     print(feature_importance_df.to_string(index=False))
 
     print("\n" + "=" * 50 + "\n")
-    return model
+    return acc, feature_importance_df
